@@ -86,6 +86,7 @@ type Plan struct {
 	WhenDestroy         WhenDestroy         `yaml:"when_destroy,omitempty"`
 	WhenNoChanges       WhenNoChanges       `yaml:"when_no_changes,omitempty"`
 	WhenPlanError       WhenPlanError       `yaml:"when_plan_error,omitempty"`
+	OmitRefreshingState bool                `yaml:"omit_refreshing_state,omitempty"`
 }
 
 // WhenAddOrUpdateOnly is a configuration to notify the plan result contains new or updated in place resources

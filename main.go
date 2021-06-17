@@ -126,6 +126,7 @@ func (t *tfnotify) Run() error {
 				NoChangesLabel:   t.config.Terraform.Plan.WhenNoChanges.Label,
 				PlanErrorLabel:   t.config.Terraform.Plan.WhenPlanError.Label,
 			},
+			OmitRefreshingState: t.config.Terraform.Plan.OmitRefreshingState,
 		})
 		if err != nil {
 			return err

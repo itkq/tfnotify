@@ -50,6 +50,8 @@ type Config struct {
 	DestroyWarningTemplate terraform.Template
 	// ResultLabels is a set of labels to apply depending on the plan result
 	ResultLabels ResultLabels
+
+	OmitRefreshingState bool
 }
 
 // PullRequest represents GitHub Pull Request metadata

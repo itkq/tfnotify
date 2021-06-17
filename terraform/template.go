@@ -3,6 +3,7 @@ package terraform
 import (
 	"bytes"
 	htmltemplate "html/template"
+	"strings"
 	texttemplate "text/template"
 )
 
@@ -102,12 +103,13 @@ type Template interface {
 
 // CommonTemplate represents template entities
 type CommonTemplate struct {
-	Title        string
-	Message      string
-	Result       string
-	Body         string
-	Link         string
-	UseRawOutput bool
+	Title               string
+	Message             string
+	Result              string
+	Body                string
+	Link                string
+	UseRawOutput        bool
+	OmitRefreshingState bool
 }
 
 // DefaultTemplate is a default template for terraform commands
@@ -268,6 +270,18 @@ func (t *PlanTemplate) Execute() (string, error) {
 	resp, err := generateOutput("plan", t.Template, data, t.UseRawOutput)
 	if err != nil {
 		return "", err
+	}
+
+	if t.OmitRefreshingState {
+		lines := strings.Split(resp, "\n")
+		ret := make([]string, len(lines))
+		for _, line := range lines {
+			if !strings.Contains(line, "Refreshing state") {
+				ret = append(ret, line)
+			}
+		}
+
+		return strings.Join(ret, "\n"), nil
 	}
 
 	return resp, nil

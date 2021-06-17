@@ -2,8 +2,9 @@ package github
 
 import (
 	"context"
-	"github.com/mercari/tfnotify/terraform"
 	"net/http"
+
+	"github.com/mercari/tfnotify/terraform"
 )
 
 // NotifyService handles communication with the notification related
@@ -63,12 +64,13 @@ func (g *NotifyService) Notify(body string) (exit int, err error) {
 	}
 
 	template.SetValue(terraform.CommonTemplate{
-		Title:        cfg.PR.Title,
-		Message:      cfg.PR.Message,
-		Result:       result.Result,
-		Body:         body,
-		Link:         cfg.CI,
-		UseRawOutput: cfg.UseRawOutput,
+		Title:               cfg.PR.Title,
+		Message:             cfg.PR.Message,
+		Result:              result.Result,
+		Body:                body,
+		Link:                cfg.CI,
+		UseRawOutput:        cfg.UseRawOutput,
+		OmitRefreshingState: cfg.OmitRefreshingState,
 	})
 	body, err = template.Execute()
 	if err != nil {
